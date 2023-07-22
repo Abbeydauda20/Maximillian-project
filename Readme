@@ -160,4 +160,6 @@ printenv <variable-name>
 
 docker container prune  :to remove all stopped containers 
 
+docker run -p 3000:80 -d --rm <image_id>  :To create and also the --rm flag removes the container once it is stopped
+
  
