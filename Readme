@@ -1,0 +1,163 @@
+Docker and Kubernetes project
+Docker is a platform for consistently building, running, and shipping applications through containers 
+
+DOCKER BASICS: 
+
+/ is the root directory which is the highest in the file system hierarchy 
+
+-bin is files for binaries and/or programs 
+
+-boot all file related to booting 
+
+-dev short cut for devices, all files needed to access devices 
+
+-etc editable text configuration, this is where we have configuration files 
+
+-home home dir where users are stored 
+
+-root is the home dir of the root user 
+
+-lib for keeping library files  
+
+-var means variables, here we have files that are updated regularly 
+
+-proc here we have files that represent running processes 
+
+We use forward (/) slash to separate files and directory in Linux while we use back slash (\) in windows 
+
+# shows the root user 
+
+~ shows the home directory 
+
+$ this is for normal users 
+
+-bash mean born again shell 
+
+-apt means advanced package tool 
+
+-grep means global regular expression print, which is used to search for text in a file or file in a directory 
+
+-Difference between RUN and CMD instruction in Dockerfile: RUN instruction is a build time instruction executed at the time of building image 
+
+CMD instruction is a runtime instruction executed when starting the container 
+
+-images are used behind the scene to hold all the logic and codes container needs to run 
+
+Hypervisor is a tool we use in creating and Managing Virtual Machines 
+
+Types: 
+
+Hyper-v for windows alone 
+
+Vmware 
+
+Virtual box 
+
+What is a Kernel: It is the core of an OS, like an engine of our car, it manages all applications and hardware resources like memory and CPU 
+
+Dockerfile is a plain text file that contains instructions that Docker us to package an image, Docker can then build a container from that image in order to package our applications
+
+#######################
+DockerFile Sample
+#Dockerfile sample:  
+
+# Specify the base image 
+
+FROM node:12 
+
+# Set the working directory inside the container 
+
+WORKDIR /app 
+
+# Copy the package.json and package-lock.json files into the container 
+
+COPY package*.json ./ 
+
+# Install the dependencies 
+
+RUN npm install 
+
+# Copy the rest of the application files into the container 
+
+COPY . . 
+
+# Expose port 3000 for the application to listen on 
+
+EXPOSE 3000 
+
+# Start the application when the container starts 
+
+CMD ["npm", "server.js"] 
+
+############################################################################## 
+Docker commands 
+## Image commands 
+
+docker pull <image name:tag> : to pull image from a docker registry 
+
+docker images/docker image ls : to list current images in your local registry 
+
+docker rmi <image name:tag> : To remove images from local registry 
+
+docker rmi -f $(docker images) : Remove all docker images at once 
+
+docker search <image name> To search for an image name from a public registry 
+
+docker save <image name> > mysql.tar  : To save an image in a tar format and share with other people 
+
+docker image load --input <file-name>  : To load a docker image from a tar file back into the local repository 
+
+docker tag <image-id-or-name> <docker-hub-username>/<repository-name>:<tag>     to tag image 
+
+docker push <docker-hub-username>/<repository-name>:<tag>   to push image into docker-hub 
+
+docker save -o <output_file.tar> <image_name>:<tag> to save an image in a tar_file 
+
+docker image rmi $(docker image ls -q) : to remove multiple images 
+
+#############################################################################
+## Container Commands 
+
+docker run <image name>: to start and run a container 
+
+docker run --detached or docker run -d : to run docker in detached mode or backgroud mode so you can have access to your terminal while container runs in the backend. 
+
+docker run -d -p <host-port:container-port> --name <container name> <image> : to start a container in detached mode, passing  port binding from your host to container port and provifing a name to the container. 
+
+DOcker ps : to list containers running state 
+
+docker ps -a : To list all containers .. irrespective of whether they are exited or running 
+
+docker ps -a -q : To list containers by theier ID's 
+
+docker logs <docker containe-ID> : Display logs for u=running container 
+
+docker stop <container ID> : To stop a specific container  
+
+docker start <container ID> : To start a stopped container 
+
+docker rm <container ID> to delete a specific container ..Note: must confirm container is deleted by rinting out the container ID 
+
+docker container rm -f $(docker container ls -aq) : to remove all stopped containers 
+
+docker rm -f $(docker ps -aq) : Forcefully remove all containers without stopping them 
+
+docker run -it ubuntu bash : to start the ubuntu container and log into it 
+
+cat /etc/*release* : to list OS details of the container 
+
+docker logs <container name or id>   this is used to troubleshoot containers and have access into their logs 
+
+docker run -it <image-name> bash: this allows you to run and get into the shell of the container 
+
+docker commit <container-id>  <name> :to take a snapshot of container and use it subsequently to spin new container  
+
+docker build -t <image-name> . :to build our image from scratch Dockerfile  
+
+Printenv :to inspect environmental variable  
+
+printenv <variable-name> 
+
+docker container prune  :to remove all stopped containers 
+
+ 
